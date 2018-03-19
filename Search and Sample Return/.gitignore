@@ -1,0 +1,7 @@
+# Project ignores
+test_dataset/
+output/
+
+# Python ignores
+code/__pycache__
+code/.ipynb_checkpoints
