@@ -167,11 +167,11 @@ Tensor("conv2d_2/truediv:0", shape=(?, 160, 160, 3), dtype=float32)
 
 Below you can see the result of 20 epochs of training:
 
-![epoch20](epoch20.PNG)
+![epoch20](epoch20.png)
 
 Due to the fact, that I didn't have access to AWS (over a week of waiting for the instance to work and contacting support), I reduced the dataset by half to run it on my personal computer. I could do this or decrease the number of neural network layers, but I didn't want to loose the possibility to train in more details. Moreover I think that the `learning_rate` I chose was too big as you can see some overfitting. Probably a better rate would be `0.002` or `0.001`. The end result still is good, as the final grade is `0.39313740942932973`.
 
-![target](target.PNG)
+![target](target.png)
 
 
 # Summary
