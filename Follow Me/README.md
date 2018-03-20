@@ -163,20 +163,30 @@ Creating result...
 Tensor("conv2d_2/truediv:0", shape=(?, 160, 160, 3), dtype=float32)
 ```
 
-# Results
+# Results and Discussion
+
+Below you can see the result of 20 epochs of training:
+
+![epoch20](epoch20.PNG)
+
+Due to the fact, that I didn't have access to AWS (over a week of waiting for the instance to work and contacting support), I reduced the dataset by half to run it on my personal computer. I could do this or decrease the number of neural network layers, but I didn't want to loose the possibility to train in more details. Moreover I think that the `learning_rate` I chose was too big as you can see some overfitting. Probably a better rate would be `0.002` or `0.001`. The end result still is good, as the final grade is `0.39313740942932973`.
+
+![target](target.PNG)
 
 
 # Summary
 
 In this project I have implemented a Fully Convolutional Network using `Tensorflow` for `Python 3.6`. The jupyter notebook was deployed on Amazon Cloud Services and produced a working solution for following people in a simulated environment.
 
-The presented neural network obtains an accuracy of `x`, which is a good result for detecting given objects. The model is trained on `people` data, so while it is great just for that, it won't identify other objects like cats or cars. To accomplish that, we would need to train our model on different data (for example images of cats). 
+The presented neural network obtains a final grade of `0.39313740942932973`, which is a good result for detecting given objects. The model is trained on `people` data, so while it is great just for that, it won't identify other objects like cats or cars. To accomplish that, we would need to train our model on different data (for example images of cats). 
 
 # Future Enhancements
 
 Future enhancements for this project could include making a deeper network, which could recognize more details. This could allow to see people from a greater distance (this is often used in Autonomous Cars).
 
 Moreover, we could actually implement other objects (like mentioned cats or cars), so that the drone responds more intelligently to it's surroundings (we wouldn't like to get too close to a cat... they like hurting drones).
+
+Moreover I would like to check the trained neural network on the full dataset, which I will try out soon to get a better result.
 
 # References
 
