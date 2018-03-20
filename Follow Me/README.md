@@ -13,7 +13,7 @@ To see how good the model works, an `IOU` metric is introduced (Intersection ove
 ## Important project files
 
 - [model_training.ipynb](https://github.com/lukzmu/udacity-robotics-drone/blob/master/code/model_training.ipynb)
-- [html version]()
+- [html version](https://github.com/lukzmu/udacity-robotics/blob/master/Follow%20Me/code/model_training.html)
 
 ## Tools used
 
