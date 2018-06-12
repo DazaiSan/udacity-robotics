@@ -1,0 +1,109 @@
+%% V1.0
+%% by Gabriel Garcia, gabrcg@gmail.com
+%% This is a template for Udacity projects using IEEEtran.cls
+
+%% Be Udacious!
+
+\documentclass[10pt,journal,compsoc]{IEEEtran}
+
+    \usepackage[pdftex]{graphicx}    
+    \usepackage{cite}
+    \hyphenation{op-tical net-works semi-conduc-tor}
+    
+    
+    \begin{document}
+    
+    \title{Deep Learning guinea pig fur type classification}
+    
+    \author{\textbf{Lukasz Zmudzinski} \\ University of Warmia and Mazury in Olsztyn \\ lukasz@zmudzinski.me}
+    
+    %\markboth{Inference project, Robotic Nanodegree, Udacity}%
+    %{}
+    \IEEEtitleabstractindextext{%
+    
+    \begin{abstract}
+    In this paper guinea pig fur type classification using deep learning imaging methods was performed on the Nvidia DIGITS 6. Models capable of distinguishing skinny, abyssinian and crested fur types were created in the process. To increase the classification accuracy empty images (with only the background) were added to the data set. Upon evaluation, the created model for the imported data set produced an accuracy of 98\% with inference time of around 3 ms on an p2.xlarge DIGITS instance.
+    \end{abstract}
+    
+    % Note that keywords are not normally used for peerreview papers.
+    \begin{IEEEkeywords}
+    classification, deep learning, animal recognition, robotics, DIGITS.
+    \end{IEEEkeywords}}
+    
+    
+    \maketitle
+    \IEEEdisplaynontitleabstractindextext
+    \IEEEpeerreviewmaketitle
+    \section{Introduction}
+    \label{sec:introduction}
+    
+    \IEEEPARstart{R}{obotic} systems are nowadays increasingly introduced in various animal care facilities like farms, daries and shelters \cite{agrirobo, dairyrobo}. With the growing need of automating work more methods of classification and decision making are needed. \newline\newline
+    In this work, deep learning techniques were utilized to create a classification model of guinea pig fur, to explore the possibilities of bringing such systems into the world of home animals.
+    
+    %example for inserting image
+    %\begin{figure}[thpb]
+    %      \centering
+    %      \caption{Robot Revolution.}
+    %      \label{fig:robot1}
+    %\end{figure}
+    
+    \subsection{Nvidia DIGITS}
+    DIGITS (NVIDIA Deep Learning GPU Training System) was used in this project. It allows to rapidly train deep neural networks (DNNs) for image classification, segmentation and object detection tasks \cite{digitswww}. \newline\newline
+    The solution comes with pre-trained models for example:
+
+    \begin{itemize}
+        \item GoogLeNet,
+        \item AlexNet,
+        \item UNET and more.        
+    \end{itemize}
+    \noindent
+    In this paper GoogLeNet was used as the most recent.
+    
+    \section{Background / Formulation}
+    TODO
+    
+    \section{Data Acquisition}
+    The data was collected by recording a square video of each guinea pig over a period of 30 seconds in different environments and then extracting each frame as an image. Each frame was then lowered in resolution to 125px and copied to Greyscale, in order to create two test data sets.
+    \newline\newline
+    To ensure good accuracy of the model, each set had to cover front, side and back angles of the guinea pig body. Moreover empty images (without guinea pigs) were added of the provided backgrounds, to increase classification accuracy (and to distinguish background from objects that should be recognized).
+    \newline\newline
+    Guinea pigs used in the experiment:
+
+    \begin{itemize}
+        \item Fifi (4 years, abyssinian) as seen in Fig. \ref{fig:abyssinian},
+        \item Rey (2 years, crested) as seen in Fig. \ref{fig:crested},
+        \item Asajj (2 years, skinny) as seen in Fig. \ref{fig:skinny}.
+    \end{itemize}
+
+    \begin{figure}[h]
+        \caption{Example dataset images for an abyssinian guinea pig.}
+        \label{fig:abyssinian}
+        \centering
+    \end{figure}
+
+    \begin{figure}[h]
+        \caption{Example dataset images for an crested guinea pig.}
+        \label{fig:crested}
+        \centering
+    \end{figure}
+
+    \begin{figure}[h]
+        \caption{Example dataset images for an skinny guinea pig.}
+        \label{fig:skinny}
+        \centering
+    \end{figure}
+    
+    \section{Results}
+    TODO
+    
+    \section{Discussion}
+    TODO
+    
+    \section{Conclusion / Future work}
+    The created model proves that guinea pig fur recognition for robotic systems is possible. The project gave good results with accuracy of 98\% and inference under 10ms. Low inference is especially important for robotic systems that deal with live animals, because the reaction times need to be low. \newline\newline
+    Future work might include robotic systems that monitor the state of specific animals, adjust food distribution depending on image readings or alert when the guinea pig suffers from any kind of illness.
+    
+   \bibliography{bib}
+   \bibliographystyle{ieeetr}
+    
+    \end{document}
