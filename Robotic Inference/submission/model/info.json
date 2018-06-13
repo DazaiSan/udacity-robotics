@@ -1,0 +1,27 @@
+{
+    "caffe flavor": "NVIDIA",
+    "caffe version": "0.15.14",
+    "creation time": "2018-06-13 16:18:00.813615",
+    "dataset_id": "20180613-161448-e73b",
+    "deploy file": "deploy.prototxt",
+    "digits version": "6.1.0",
+    "framework": "caffe",
+    "id": "20180613-161800-e40e",
+    "image dimensions": [
+        256,
+        256,
+        3
+    ],
+    "image resize mode": "squash",
+    "job id": "20180613-161800-e40e",
+    "labels file": "labels.txt",
+    "mean file": "mean.binaryproto",
+    "mean subtraction": "image",
+    "model file": "original.prototxt",
+    "name": "Conveyor GoogLeNet",
+    "snapshot file": "snapshot_iter_1896.caffemodel",
+    "solver file": "solver.prototxt",
+    "status": "Aborted",
+    "train_val file": "train_val.prototxt",
+    "username": "lukzmu"
+}

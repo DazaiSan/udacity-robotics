@@ -86,7 +86,7 @@
         \centering
     \end{figure}
 
-    The data was collected by recording a square video of each guinea pig over a period of 30 seconds in different environments and then extracting each frame as an image. Each frame was then lowered in resolution to 256px/256px in order to fit GoogLeNet requirements. Example images can be seen in Fig. \ref{fig:pigs}.
+    The data was collected by recording a square video of each guinea pig over a period of 30 seconds in different environments and then extracting each frame as an image. Each frame was then lowered in resolution to 256x256 px in order to fit GoogLeNet requirements. Example images can be seen in Fig. \ref{fig:pigs}.
 
     To ensure good accuracy of the model, each set had to cover front, side and back angles of the guinea pig body. Moreover empty images (without guinea pigs) were added of the provided backgrounds, to increase classification accuracy in distinguish items.
     \newline\newline
@@ -167,5 +167,54 @@
     
    \bibliography{bib}
    \bibliographystyle{ieeetr}
-    
+
+   \newpage
+    \section{Udacity provided data}
+
+    All the necessary project requirements for the supplied data were placed in this section. My plan is to publish the paper as an actual scientific article, so need to separate the Udacity challenge from the actual guinea pig project.\newline
+
+    \noindent The following steps were taken to create the Conveyor Belt model:
+
+    \begin{enumerate}
+        \item The DIGITS platform was started,
+        \item {
+            Provided image data set was downloaded to "Conveyor Belt" image classification set. The data settings were:
+            \begin{itemize}
+                \item Image dimensions: 256x256
+                \item Image type: Color
+                \item Resize Transformation: Squash
+                \item DB Backend: lmdb
+                \item Image encoding: png
+                \item DB Compression: none
+            \end{itemize}
+            The whole dataset took: 675 mb.
+        }
+        \item {
+            A new Image Classification Model was created with the following settings:
+            \begin{itemize}
+                \item Training epochs: 15,
+                \item Solver type: Adagrad,
+                \item Base Learning Rate: 0.01,
+                \item Network used: GoogLeNet standard network.
+            \end{itemize}
+            After some time, I broke the model creation, because after 6 epochs, no changes were seen on the graph.
+        }
+        \item {
+            The \textbf{evaluate} was run on the model, providing the results as seen on Fig. \ref{fig:udacity}:
+            \begin{itemize}
+                \item Average time: 4.95ms
+                \item Model accuracy: 75.41\%
+            \end{itemize}
+        }
+    \end{enumerate}
+
+    \begin{figure}[h!]
+        \includegraphics[width=\linewidth]{udacity.png}
+        \caption{The results of the evaluate methods for Udacity data set.}
+        \label{fig:udacity}
+        \centering
+    \end{figure}
+\newpage
+    \subsection{Conclusion}
+    The Conveyor Belt project ended up quite similar to the Guinea Pig that was created earlier. The inference time achieved was really good - around 5ms. That means that the robot, will get the data about the object almost instantly. The accuracy was just over 75\%, which makes the passing rate, although could be improved, by playing with the model parameters.
     \end{document}
