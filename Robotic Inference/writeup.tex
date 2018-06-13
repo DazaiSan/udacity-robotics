@@ -13,7 +13,7 @@
     
     \begin{document}
     
-    \title{Deep Learning guinea pig fur type classification}
+    \title{Deep Learning guinea pig image classification using NVidia DIGITS and GoogLeNet}
     
     \author{\textbf{Lukasz Zmudzinski} \\ University of Warmia and Mazury in Olsztyn \\ lukasz@zmudzinski.me}
     
@@ -22,7 +22,7 @@
     \IEEEtitleabstractindextext{%
     
     \begin{abstract}
-    In this paper guinea pig fur type classification using deep learning imaging methods was performed on the Nvidia DIGITS 6. Models capable of distinguishing skinny, abyssinian and crested fur types were created in the process. To increase the classification accuracy empty images (with only the background) were added to the data set. Upon evaluation, the created model for the imported data set produced an accuracy of 98\% with inference time of around 3 ms on an p2.xlarge DIGITS instance.
+    In this paper guinea pig classification using deep learning imaging methods was performed on the Nvidia DIGITS 6. Models capable of distinguishing skinny, abyssinian and crested fur types were created in the process. To increase the classification accuracy empty images (with only the background) were added to the data set. Upon evaluation, the created model for the imported data set produced an accuracy of 98\% with inference time of around 3 ms on an p2.xlarge DIGITS instance.
     \end{abstract}
     
     % Note that keywords are not normally used for peerreview papers.
@@ -37,8 +37,9 @@
     \section{Introduction}
     \label{sec:introduction}
     
-    \IEEEPARstart{R}{obotic} systems are nowadays increasingly introduced in various animal care facilities like farms, daries and shelters \cite{agrirobo, dairyrobo}. With the growing need of automating work more methods of classification and decision making are needed. \newline\newline
-    In this work, deep learning techniques were utilized to create a classification model of guinea pig fur, to explore the possibilities of bringing such systems into the world of home animals.
+    \IEEEPARstart{R}{obotic} systems are nowadays increasingly introduced in various animal care facilities like farms, daries and shelters \cite{agrirobo, dairyrobo}. With the growing need of automating work more methods of image classification and decision making are needed. 
+
+    In this work, deep learning techniques were utilized to create a classification model of guinea pigs in different home environments, to explore the possibilities of bringing such systems into the world of household animals.
     
     %example for inserting image
     %\begin{figure}[thpb]
@@ -57,44 +58,69 @@
         \item UNET and more.        
     \end{itemize}
     \noindent
-    In this paper GoogLeNet was used as the most recent.
+    In this paper GoogLeNet was used as the model of choice.
     
     \section{Background / Formulation}
-    TODO
+    Deep Learning is growing in popularity over the past few years. It is connected to the fact that it becomes more useful than before thanks to the amount of available training data and advances in computer hardware/software \cite{dl}. 
+
+    Another problem with neural networks in general was vanishing gradients and unpredictable weight initialization \cite{glnp}. This becomes solved by the use of RELUs (Rectified Linear Units)\cite{relu} and more recently the GoogLeNet deep learning model\cite{dwc}.
+
+    The model is divided into four classes:
+    \begin{itemize}
+        \item \textbf{None} - when there is no guinea pig in the image,
+        \item \textbf{Ayssinian}, \textbf{Crested} and \textbf{Skinny} - fur type.
+    \end{itemize}
     
     \section{Data Acquisition}
-    The data was collected by recording a square video of each guinea pig over a period of 30 seconds in different environments and then extracting each frame as an image. Each frame was then lowered in resolution to 125px and copied to Greyscale, in order to create two test data sets.
+    The data was collected by recording a square video of each guinea pig over a period of 30 seconds in different environments and then extracting each frame as an image. Each frame was then lowered in resolution to 256px in order to fit GoogLeNet requirements. Example images can be seen in Fig. \ref{fig:pigs}.
     \newline\newline
     To ensure good accuracy of the model, each set had to cover front, side and back angles of the guinea pig body. Moreover empty images (without guinea pigs) were added of the provided backgrounds, to increase classification accuracy (and to distinguish background from objects that should be recognized).
     \newline\newline
     Guinea pigs used in the experiment:
 
     \begin{itemize}
-        \item Fifi (4 years, abyssinian) as seen in Fig. \ref{fig:abyssinian},
-        \item Rey (2 years, crested) as seen in Fig. \ref{fig:crested},
-        \item Asajj (2 years, skinny) as seen in Fig. \ref{fig:skinny}.
+        \item Fifi (4 years, abyssinian),
+        \item Rey (2 years, crested),
+        \item Asajj (2 years, skinny).
     \end{itemize}
 
     \begin{figure}[h]
-        \caption{Example dataset images for an abyssinian guinea pig.}
-        \label{fig:abyssinian}
-        \centering
-    \end{figure}
-
-    \begin{figure}[h]
-        \caption{Example dataset images for an crested guinea pig.}
-        \label{fig:crested}
-        \centering
-    \end{figure}
-
-    \begin{figure}[h]
-        \caption{Example dataset images for an skinny guinea pig.}
-        \label{fig:skinny}
+        \includegraphics[width=\linewidth]{pig_dataset.png}
+        \caption{Example images for abyssinian, crested and skinny guinea pigs from the provided data set.}
+        \label{fig:pigs}
         \centering
     \end{figure}
     
     \section{Results}
-    TODO
+
+    The final classification model was gathered from running the described image set over 15 epochs of GoogLeNet model on Nvidia DIGITS. As you can see on Fig. \ref{fig:googlenet} the accuracy after 15 epochs rose to over $90\%$, while the finall value loss was around $0.3$ with a learning rate of $0.01$. Using more epochs and a different learning was tested, but it led to overfitting of the data.
+
+    \begin{figure}[h]
+        \includegraphics[width=\linewidth]{googlenet.png}
+        \caption{Graph showing the value accuracy (orange), test data loss (blue) and value loss (green) after running the GoogLeNet model.}
+        \label{fig:googlenet}
+        \centering
+    \end{figure}
+
+    After the model was created, a series of tests were performed to check, if the inference is correct. The first set of tests consisted of images from the previously gathered data set. The prediction was always right for provided images, with the value between 70\%-95\%. You can see an example result on Fig. \ref{fig:result_01}.
+    
+    \begin{figure}[h]
+        \includegraphics[width=\linewidth]{result_01.png}
+        \caption{Example correct prediction results (79.53\%) using previously captured images in selected environments using GoogLeNet.}
+        \label{fig:result_01}
+        \centering
+    \end{figure}
+
+    After acquiring enough information on the predictions, tests on new images were performed (different environments, same guinea pigs) giving satisfactory results - guinea pigs were classified correctly on each provided picture containing the animal. Example result on Fig. \ref{fig:result_02}.
+
+    One failed prediction was encountered, when a picture of a background with a cat was used. The cat was badly classified as an abyssinian guinea pig.
+
+    \begin{figure}[h]
+        \includegraphics[width=\linewidth]{result_02.png}
+        \caption{Example correct prediction results (94.0\%) using post-model captured images in animal cage environment using GoogLeNet.}
+        \label{fig:result_02}
+        \centering
+    \end{figure}
     
     \section{Discussion}
     TODO
