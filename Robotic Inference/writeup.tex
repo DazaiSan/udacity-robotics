@@ -22,7 +22,7 @@
     \IEEEtitleabstractindextext{%
     
     \begin{abstract}
-    In this paper guinea pig classification using deep learning imaging methods was performed on the Nvidia DIGITS 6. Models capable of distinguishing skinny, abyssinian and crested fur types were created in the process. To increase the classification accuracy empty images (with only the background) were added to the data set. Upon evaluation, the created model for the imported data set produced an accuracy of 98\% with inference time of around 3 ms on an p2.xlarge DIGITS instance.
+    In this paper guinea pig classification using deep learning imaging methods was performed on the Nvidia DIGITS 6. Models capable of distinguishing skinny, abyssinian and crested fur types were created in the process. To increase the classification accuracy empty images (with only the background) were added to the data set. Upon evaluation, the created model recognized the animals correctly from images taken in various household backgrounds.
     \end{abstract}
     
     % Note that keywords are not normally used for peerreview papers.
@@ -65,12 +65,16 @@
 
     Another problem with neural networks in general was vanishing gradients and unpredictable weight initialization \cite{glnp}. This becomes solved by the use of RELUs (Rectified Linear Units)\cite{relu} and more recently the GoogLeNet deep learning model\cite{dwc}.
 
-    The model is divided into four classes:
+    In neural network algorithms we can tweak several parameters, that will greately impact the final output: number of epochs, learning rate, solver type and many more.
+
     \begin{itemize}
-        \item \textbf{None} - when there is no guinea pig in the image,
-        \item \textbf{Ayssinian}, \textbf{Crested} and \textbf{Skinny} - fur type.
+        \item \textbf{Epoch} - one complete pass  of the data in the data set. The amount of epochs should be determined through tests. Small number of epochs often leads to bad predictions, while a big number leads to overfitting.
+        \item \textbf{Learning rate} - describes the rate at which the network abandons old beliefs, for new ones to take their place. The value must be correct, values that are too big or too small may lead to bad predictions.
+        \item \textbf{Solver type} - contains information about how the weights are updated for the network. This project used one of the most popular ones: Stochastic Gradient Descent (SGD) \cite{sgd}. 
     \end{itemize}
-    
+
+    GoogLeNet connects various techniques known from Deep Learning like convolutions, pooling, adding softmax and more, to distinguish all the objects that are present in the image. 
+
     \section{Data Acquisition}
     The data was collected by recording a square video of each guinea pig over a period of 30 seconds in different environments and then extracting each frame as an image. Each frame was then lowered in resolution to 256px in order to fit GoogLeNet requirements. Example images can be seen in Fig. \ref{fig:pigs}.
     \newline\newline
@@ -82,6 +86,13 @@
         \item Fifi (4 years, abyssinian),
         \item Rey (2 years, crested),
         \item Asajj (2 years, skinny).
+    \end{itemize}
+
+    \noindent Using the data, four labels were produced and assigned to the following neural network classes:
+
+    \begin{itemize}
+        \item \textbf{None} - when there is no guinea pig in the image,
+        \item \textbf{Ayssinian}, \textbf{Crested} and \textbf{Skinny} - fur type.
     \end{itemize}
 
     \begin{figure}[h]
@@ -126,7 +137,7 @@
     TODO
     
     \section{Conclusion / Future work}
-    The created model proves that guinea pig fur recognition for robotic systems is possible. The project gave good results with accuracy of 98\% and inference under 10ms. Low inference is especially important for robotic systems that deal with live animals, because the reaction times need to be low. \newline\newline
+    The created model proves that guinea pig fur recognition for robotic systems is possible. The project gave good results - the created model recognized the animals correctly from images taken in various household backgrounds. The prediction was acquired fast (under 5ms) making the inference time low. This is especially important for robotic systems that deal with live animals, because the reaction times need to be rapid. \newline\newline
     Future work might include robotic systems that monitor the state of specific animals, adjust food distribution depending on image readings or alert when the guinea pig suffers from any kind of illness.
     
    \bibliography{bib}
