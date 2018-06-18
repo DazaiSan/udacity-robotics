@@ -8,6 +8,7 @@
 
     \usepackage[pdftex]{graphicx}    
     \usepackage{cite}
+    \usepackage{geometry}% http://ctan.org/pkg/geometry
     \hyphenation{op-tical net-works semi-conduc-tor}
     
     
@@ -22,7 +23,7 @@
     \IEEEtitleabstractindextext{%
     
     \begin{abstract}
-    A description of the project.
+    This paper focuses on describing the process of creating the \textbf{Where am I?} Udacity project using Monte Carlo Localization. Moreover localization basics along with Kalman Filters are described. Data on model configuration is then presented with test results.
     \end{abstract}
     
     % Note that keywords are not normally used for peerreview papers.
@@ -37,9 +38,104 @@
     \section{Introduction}
     \label{sec:introduction}
     
-    \IEEEPARstart{I}{ntroduction} text. 
+    \IEEEPARstart{L}{ocalization} is one of the main problems when dealing with mobile robots. What for a human seems pretty easy, can get quite complicated for an intelligent agent. Therefore localization algorithms were created, to help in getting over the problem.
+
+    In robotics we have three main localization problems: position tracking, global localization and the kidnappend robot problem. We can tackle these challenges using Kalman Filters and Particle Filter localization algorithm (otherwise called Monte Carlo Localization).
+
+    This project focuses on creating a system, that will localize a robot inside the Robot Operating System environment using Gazebo and RViz simulation. The project is divided into three tasks:
+    
+    \begin{itemize}
+        \item Building a mobile robot for simulated tasks,
+        \item Creating a ROS package that launches a custom robot model in a Gazebo world and utilizes packages like AMCL and the Navigation Stack,
+        \item Exploring, adding, and tuning specific parameters corresponding to each package to achieve the best possible localization results.
+    \end{itemize}
 
     \section{Background}
+
+    \begin{figure*}
+        \label{fig:ekfvsmcl}            
+        \begin{center}
+            \caption{Comparison of EKF and MCL parameters.}
+            \begin{tabular}{|c|c|c|}     
+                \hline           
+                \textbf{Parameter} & \textbf{MCL} & \textbf{EKF} \\                
+                \hline
+                Measurements & Raw & Landmarks \\
+                \hline
+                Measurement Noise & Any & Gaussian \\
+                \hline
+                Posterior & Particles & Gaussian \\
+                \hline
+                Memory efficiency & + & ++ \\
+                \hline
+                Time efficiency & + & ++ \\
+                \hline
+                Implementation & ++ & + \\
+                \hline
+                Resolution & +  & ++ \\
+                \hline
+                Robustness & ++ & + \\
+                \hline
+                Memory and Resolution Control & Yes & No \\
+                \hline
+                Global localization & Yes & No \\
+                \hline
+                State Space & Multimodel Discrete & Unimodal Continuous \\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{figure*}
+
+    Localization is connected with determining the robot's pose in a mapped environment. It's one of the main challenges in mobile robotics. It is usually done by applying a probabilistic filter to sensor data (almost always containing noise) to track the robot's position and orientation. Localization doesn't come without challenges, we can divide them into three categories: position tracking, global localization and the kidnapped robot problem. There are four popular localization algorithms used nowadays that solve the issues:
+
+    \begin{itemize}
+        \item Extended Kalman Filter,
+        \item Markov Localization,
+        \item Grid Localization,
+        \item Monte Carlo Localization.
+    \end{itemize}
+
+    \subsection{Kalman filters}
+
+    Kalman filters are used because of the fact, that they can process data with a lot of uncertainty or noise and give accurate estimates of the real value quickly. Compared to other algorithms, you don't need a big amount of data, to calculate an accurate estimate. There are three types of Kalman Filters:
+
+    \begin{itemize}
+        \item Kalman Filter (KF) - linear,
+        \item Extended Kalman Filter (EKF) - nonlinear,
+        \item Unscented Kalman Filter (UKF) - highly nonlinear.
+    \end{itemize}
+
+    Kalman filters allow the use of sensor fusion. What it means, is that you can collect data from various onboard sensors, which will give a more accurate value of the estimation. 
+
+    The Kalman Filter cannot be used on a nonlinear function. Instead, a local linear approximation is used to update the covariance of the estimate. The linear approximation is made using the first terms of the Taylor Series, which includes the first derivative of the function.
+
+    \subsection{Monte Carlo Localization}
+
+    Monte Carlo Localization, otherwise called Particle Filter localization algorithm, is a popular algorithm for localization among roboticists. The name comes from the fact, that the algorithm uses particles, that reassamble the robot. Each particle has 4 values: x position, y position, direction (angle) and weight. The MCL algorithm is limited to global and local localizations only (cannot be applied to kidnapped robot problem). MCL takes raw measurements (as compared to landmarks in KF) and can take any type of noise, so it isn't limited to gaussian. 
+
+    The powerful Monte Carlo localization algorithm estimates the posterior distribution of a robot’s position and orientation based on sensory information. This process is known as a recursive Bayes filter.
+
+    \noindent To understand mobile robot localization, one must know the following definitions:
+
+    \begin{itemize}
+        \item \textbf{Dynamical system} - the mobile robot and it's environment,
+        \item \textbf{State} - The robot's pose, including position and orientation,
+        \item \textbf{Measurements} - Perception and odometry data.
+    \end{itemize}
+
+    The goal of Bayes filtering is to estimate a probability density over the state space conditioned on the measurements. The probability density, or also known as posterior is called the belief and is denoted as $Bel(X_{t}) = P(X_{t}|Z_{1...t})$, where $X_{t}$ is the state at time $t$ and $Z_{1...t}$ are the measurements from time 1 to $t$.\\
+
+    \noindent The MCL algorithm has five steps needed to work:
+
+    \begin{enumerate}
+        \item Taking the previous belief of the robot position,
+        \item Updating the motion data,
+        \item Updating the measurement,
+        \item Resampling data,
+        \item Creating a new belief.
+    \end{enumerate}
+
+    The differences between Extended Kalman filer and Monte Carlo Localization as in Fig. \ref{fig:ekfvsmcl}.
 
     \section{Model configuration}
 
